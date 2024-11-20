@@ -40,6 +40,11 @@ export class TareasComponent implements OnInit {
     this.tareaService.actualizarTarea(tarea).subscribe(
       () => {
         console.log(`Tarea actualizada: ${tarea.titulo} - Completada: ${tarea.completada}`);
+       
+        const index = this.tareas.findIndex(t => t.id === tarea.id);
+        if (index !== -1) {
+          this.tareas[index] = { ...tarea }; 
+        }
       },
       (error) => console.error('Error al actualizar tarea:', error)
     );
@@ -65,9 +70,9 @@ export class TareasComponent implements OnInit {
   guardarCambios() {
     if (this.tareaSeleccionada) {
       this.actualizarTarea(this.tareaSeleccionada);
-      this.tareaSeleccionada = null;
+      this.tareaSeleccionada = null; 
     }
-    this.cerrarModal();
+    this.cerrarModal(); 
   }
 
   cancelarEdicion() {
