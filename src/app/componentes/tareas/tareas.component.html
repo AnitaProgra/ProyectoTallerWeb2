@@ -1,0 +1,35 @@
+<div class="container">
+  <h1>Gestión de Tareas</h1>
+
+  <form (submit)="agregarTarea()">
+    <input [(ngModel)]="nuevaTarea.titulo" name="titulo" placeholder="Título" required>
+    <input [(ngModel)]="nuevaTarea.descripcion" name="descripcion" placeholder="Descripción" required>
+    <button type="submit" class="agregar">Agregar Tarea</button>
+  </form>
+  
+  <!-- listo tareas -->
+  <ul>
+    <li *ngFor="let tarea of tareas">
+      <input type="checkbox" [(ngModel)]="tarea.completada" (change)="actualizarTarea(tarea)">
+      <span [ngClass]="{ 'completada': tarea.completada }">{{ tarea.titulo }} - {{ tarea.descripcion }}</span>
+      
+      <!-- editar tarea -->
+      <button class="editar" (click)="seleccionarTarea(tarea)">Editar</button>
+      <button class="eliminar" (click)="eliminarTarea(tarea)">Eliminar</button>
+    </li>
+  </ul>
+
+  <!-- Modal for editing task -->
+  <div *ngIf="tareaSeleccionada" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="cerrarModal()">&times;</span>
+      <h2>Editar Tarea</h2>
+      <form (submit)="guardarCambios()">
+        <input [(ngModel)]="tareaSeleccionada.titulo" name="titulo" placeholder="Título" required>
+        <input [(ngModel)]="tareaSeleccionada.descripcion" name="descripcion" placeholder="Descripción" required>
+        <button type="submit">Guardar Cambios</button>
+      </form>
+    </div>
+  </div>
+</div>
+
